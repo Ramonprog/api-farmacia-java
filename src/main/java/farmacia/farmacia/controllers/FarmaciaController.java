@@ -9,6 +9,7 @@ import farmacia.farmacia.remedios.dto.DadosDeleteRemedio;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +53,16 @@ public class FarmaciaController {
         }
         repository.deleteById(Id);
         return ResponseEntity.ok("Remédio" + remedioSelecionado.get().getNome() + "deletado com sucesso!");
+    }
+
+    @GetMapping("/{Id}")
+    public ResponseEntity<DadosListagemRemedio> getOne(@PathVariable Long Id){
+        var remedioEncontrado = repository.findById(Id);
+        if(remedioEncontrado.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        return ResponseEntity.ok(new DadosListagemRemedio(remedioEncontrado.get()));
     }
 }
 
