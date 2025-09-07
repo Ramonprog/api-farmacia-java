@@ -5,6 +5,7 @@ import farmacia.farmacia.remedios.RemedioEntity;
 import farmacia.farmacia.remedios.RemedioRepository;
 import farmacia.farmacia.remedios.dto.DadosAtualizarRemedios;
 import farmacia.farmacia.remedios.dto.DadosCadastroRemedios;
+import farmacia.farmacia.remedios.dto.DadosDeleteRemedio;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,17 @@ public class FarmaciaController {
         var remedioSelecionado = repository.getReferenceById(dados.Id());
         remedioSelecionado.atualizarInfos(dados);
         return ResponseEntity.ok("Dados atualizados com sucesso");
+    }
+
+    @DeleteMapping("/{Id}")
+    @Transactional
+    public  ResponseEntity<String> deletar(@PathVariable Long Id){
+        var remedioSelecionado = repository.findById(Id);
+        if(remedioSelecionado.isEmpty()){
+            return ResponseEntity.badRequest().body("Remédio não encontrado");
+        }
+        repository.deleteById(Id);
+        return ResponseEntity.ok("Remédio" + remedioSelecionado.get().getNome() + "deletado com sucesso!");
     }
 }
 
