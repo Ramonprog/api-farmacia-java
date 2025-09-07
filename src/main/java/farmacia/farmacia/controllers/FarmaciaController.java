@@ -52,7 +52,7 @@ public class FarmaciaController {
             return ResponseEntity.badRequest().body("Remédio não encontrado");
         }
         repository.deleteById(Id);
-        return ResponseEntity.ok("Remédio" + remedioSelecionado.get().getNome() + "deletado com sucesso!");
+        return ResponseEntity.ok("Remédio " + remedioSelecionado.get().getNome() + " deletado com sucesso!");
     }
 
     @GetMapping("/{Id}")

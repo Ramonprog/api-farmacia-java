@@ -15,7 +15,7 @@ public record DadosListagemRemedio(
         LocalDate validade,
         lab laboratorio
    ) {
-    public DadosListagemRemedio(RemedioEntity remedio){
+    public  DadosListagemRemedio(RemedioEntity remedio){
       this(
               remedio.getId(),
               remedio.getNome(),
