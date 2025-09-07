@@ -1,9 +1,11 @@
 package farmacia.farmacia.remedios;
 
+import farmacia.farmacia.remedios.dto.DadosAtualizarRemedios;
 import farmacia.farmacia.remedios.dto.DadosCadastroRemedios;
 import farmacia.farmacia.remedios.enuns.Via;
 import farmacia.farmacia.remedios.enuns.lab;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
 import lombok.*;
 
@@ -25,6 +27,17 @@ public class RemedioEntity {
         this.validade = dados.validade();
         this.laboratorio = dados.laboratorio();
     }
+
+    public void atualizarInfos(@Valid DadosAtualizarRemedios dados){
+        if(dados.nome() != null){
+            this.nome = dados.nome();
+        }
+
+        if(dados.via() != null) {
+            this.nome = String.valueOf(dados.via());
+        }
+    }
+
     @Id
     //identifica que o DB gera o ID autometicamente
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,4 +53,5 @@ public class RemedioEntity {
     private LocalDate validade;
     @Enumerated(EnumType.STRING)
     private lab laboratorio;
+
 }
